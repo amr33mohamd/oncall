@@ -1,0 +1,25 @@
+{
+  "name": "oncall",
+  "version": "1.0.0",
+  "description": "Hospitals collect adminpanal for the app",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "Null"
+  },
+  "keywords": [
+    "Null"
+  ],
+  "author": "Amr Mohamed",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.15.4",
+    "jsdom": "^11.1.0",
+    "mysql": "^2.14.1",
+    "path": "^0.12.7",
+    "pug": "^2.0.0-rc.3"
+  }
+}
