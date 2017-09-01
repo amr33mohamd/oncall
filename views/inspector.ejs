@@ -1,9 +1,84 @@
-<%- include('parts/header', {page: 'records control'}); %>
+<%- include('parts/header', {page: 'Records Control'}); %>
 <%- include('parts/slide_bar'); %>
+<div class="container">
+
+<!-- Table --->
+<div class="col-md-10 col-sm-12 col-xs-12">
+              <div class="x_panel">
+                <div class="x_title">
+                  <h2>Hospitals | <small>Add : Records</small></h2>
+                  <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                  </ul>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                  <p class="text-muted font-13 m-b-30">
+                    Here you add doctors data .......
+                  </p>
+                  <form action="/inspector_add" method="get">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Date <span class="required">*</span>
+                    </label>
+                    <input type="date" name="date" class="form-control" required/>
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">section <span class="required">*</span>
+                    </label>
+                    <select class="form-control" name="section_id">
+                      <% sections.forEach(function(section){ %>
+                        <option value="<%= section['id'] %>"><%= section['name'] %></option>
+                      <% }); %>
+                    </select>
+                    <% for(var num=1; num<=6; num++) {%>
+                    <div class="form-inline">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Doctor number <%= num %> <span class="required">*</span>
+                      </label>
+
+                      <div class="col-md-12 col-sm-12 col-xs-12 row">
+                        <input style="margin-left:5px;" type="text" id="<%= num %>name" name="<%= num %>name" placeholder="name"  class="form-control col-md-4 col-xs-4">
+                        <input style="margin-left:5px;" type="email" id="<%= num %>email" name="<%= num %>email" placeholder="email"  class="form-control col-md-4 col-xs-4">
+                        <input style="margin-left:5px;" type="text" id="<%= num %>extinstion" name="<%= num %>extinstion" placeholder="extinstion" class="form-control col-md-4 col-xs-4">
+                        <input style="margin-left:5px;" type="number" id="<%= num %>phone_number" name="<%= num %>phone_number" placeholder="phone number"  class="form-control col-md-4 col-xs-4">
+                        <input style="margin-left:5px;" type="number" id="<%= num %>pager" name="<%= num %>pager" placeholder="pager"  class="form-control col-md-4 col-xs-4">
+                        <input style="margin-left:5px;margin-top:5px;" type="text" id="<%= num %>position" name="<%= num %>position" placeholder="position"  class="form-control col-md-4 col-xs-4">
+                      </div>
+                    </div>
+                    <% } %>
+                     <div class="form-inline">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Supervisor :<span class="required">*</span>
+                      </label>
+
+                      <div class="col-md-12 col-sm-12 col-xs-12 row">
+                        <input style="margin-left:5px;" type="text" required id="inspect_name" name="inspect_name" placeholder="name"  class="form-control col-md-4 col-xs-4">
+                        <input style="margin-left:5px;" type="email" required id="inspect_email" name="inspect_email" placeholder="email"  class="form-control col-md-4 col-xs-4">
+                        <input style="margin-left:5px;" type="text" required id="inspect_extinstion" name="inspect_extinstion" placeholder="extinstion" class="form-control col-md-4 col-xs-4">
+                        <input style="margin-left:5px;" type="number" required id="inspect_phone_number" name="inspect_phone_number" placeholder="phone number"  class="form-control col-md-4 col-xs-4">
+                        <input style="margin-left:5px;" type="number" required id="inspect_pager" name="inspect_pager" placeholder="pager"  class="form-control col-md-4 col-xs-4">
+                        <input style="margin-left:5px;margin-top:5px;" required type="text" id="inspect_position" name="inspect_position" placeholder="position"  class="form-control col-md-4 col-xs-4">
+                      </div>
+                    </div>
+                    <hr>
+                    <div class="form-inline">
+                      <div class="col-md-12 col-sm-12 col-xs-12 row">
+                        <input type="submit" class="btn btn-success center-block" value="Add"/>
+                      </div>
+                    </div>
+                  </form>
 
 
 
+                </div>
+              </div>
+            </div>
 
+
+
+                             </div>
 
 
 

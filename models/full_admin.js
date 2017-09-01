@@ -14,9 +14,9 @@ exports.hospitals = function(callback){
   });
 };
 
-exports.add_hospital_admin = function(name,email,password,hospital_id,callback){
-  var sql = "insert into users(name,email,password,hospital_id,rule) values(?,?,?,?,?)";
-  con.query(sql,[name,email,password,hospital_id,2],function(err, res){
+exports.add_hospital_admin = function(name,email,password,hospital_id,hospital_name,callback){
+  var sql = "insert into users(name,email,password,hospital_id,hospital_name,rule) values(?,?,?,?,?,?)";
+  con.query(sql,[name,email,password,hospital_id,hospital_name,2],function(err, res){
     if(res){
       callback(true);
     }
