@@ -11,10 +11,10 @@
   app.use(express.static('public'));
 
   con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database:"oncall"
+  host: "ipobfcpvprjpmdo9.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+  user: "q3bre9d02wcisjw0",
+  password: "diwqj6fbke7pay5j",
+  database:"cdsaehstpuf6a5jm"
   });
 
 
