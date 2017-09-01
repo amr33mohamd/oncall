@@ -36,7 +36,33 @@
                     </select>
                     <% for(var num=1; num<=6; num++) {%>
                     <div class="form-inline">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Doctor number <%= num %> <span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                      <% if(num == 1){ %>
+                      Intern
+                      <% } %>
+
+                      <% if(num == 2){ %>
+                      First oncall
+                      <% } %>
+
+                      <% if(num == 3){ %>
+                      Second oncall
+                      <% } %>
+
+                      <% if(num == 4){ %>
+                      Third oncall
+                      <% } %>
+
+                      <% if(num == 5){ %>
+                      Fourth oncall
+                      <% } %>
+
+                      <% if(num == 6){ %>
+                      Consultant oncall 
+                      <% } %>
+
+
+                       <span class="required">*</span>
                       </label>
 
                       <div class="col-md-12 col-sm-12 col-xs-12 row">
