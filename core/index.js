@@ -2,7 +2,7 @@
    express = require('express');
    app = express();
   var mysql = require('mysql');
-   port = 5000;
+   port = process.env.PORT || 5000;
     kk = require('express')();
     http = require('http').Server(app);
     io = require('socket.io')(http);
