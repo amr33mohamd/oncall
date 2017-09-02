@@ -12,7 +12,7 @@
                 <% if(rule == 1){ %>
                   <li><a href="/full_admin"><i class="fa fa-user"></i> Hospitals admins</span></a></li>
                   <% } %>
-                  
+                  <h1>RULE:  <%= rule %></h1>
                   <% if(rule == 1 || rule == 2){ %>
                   <li><a><i class="fa fa-ambulance"></i> Hospital options <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">

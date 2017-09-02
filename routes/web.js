@@ -1,12 +1,40 @@
 app.get('/',function(req,res){
   res.render('login');
 });
-
+app.get('/login',function(req,response){
+  var email = req.param('email');
+  var password = req.param('password');
+  var sql = "select * from users where email = ? and password = ?";
+  con.query(sql,[email,password],function(err, res){
+    if(res.length == 0){
+      response.redirect('/');
+    }
+    else{
+      session.startSession(req, response,function(){
+    //fake session ------->
+    req.session.put('hospital_id',res[0].hospital_id);
+      
+        req.session.put('rule', res[0].rule);
+        if(res[0].rule == 1){
+          response.redirect('/full_admin');
+        }
+        else if(res[0].rule = 2){
+          response.redirect('/hospital_admin_sections');
+        }
+        else{
+          response.redirect('/inspector');
+        }
+      });
+    }
+  }); 
+});
 //full admin control -------------->
 app.get('/full_admin',function(req,res){
-  full_admin.hospitals_admins(function(data){
-    full_admin.hospitals(function(hospitals){
-      res.render('full_admin',{data:data,hospitals:hospitals});
+  session.startSession(req, res,function(){
+    full_admin.hospitals_admins(function(data){
+      full_admin.hospitals(function(hospitals){
+        res.render('full_admin',{data:data,hospitals:hospitals,rule:req.session.get('rule')});
+      });
     });
   });
 });
@@ -34,9 +62,7 @@ app.get('/hospital_admin_inspectors',function(req,res){
 app.get('/hospital_admin_sections',function(req,res){
 
   session.startSession(req, res,function(){
-    //fake session ------->
-    req.session.put('rule', '1');
-    req.session.put('hospital_id',1);
+    
 
       if(req.session.get('rule') == 1){
       var hospital_id = 'admin';
@@ -61,7 +87,7 @@ app.get('/inspector',function(req,res){
   session.startSession(req, res,function(){
     hospital_id = req.session.get('hospital_id');
     hospital_admin.hospital_sections(hospital_id,function(data){
-    res.render('inspector',{sections:data});
+    res.render('inspector',{sections:data,rule:req.session.get('rule')});
     });
   });
 });
@@ -86,24 +112,11 @@ app.get('/inspector_add',function(req,resposnse){
           if(err){
             resposnse.send(err);
           }
+
         });
       }
-      if(i==6){
-        inspect_name = req.param('inspect_name');
-        inspect_email = req.param('inspect_email');
-        inspect_extinstion = req.param('inspect_extinstion');
-        inspect_phone_number = req.param('inspect_phone_number');
-        inspect_pager = req.param('inspect_pager');
-        inspect_position = req.param('inspect_position');
-        sql = "insert into records(name,email,phone,position,pager,extintion,date,hospital_id,section_id,type) values(?,?,?,?,?,?,?,?,?,'supervisor')";
-        con.query(sql,[inspect_name,inspect_email,inspect_phone_number,inspect_position,inspect_pager,inspect_extinstion,date,hospital_id,section_id],function(err,ress){
-          if(ress){
-            resposnse.redirect('/inspector');
-          }
-          else {
-            resposnse.send(err);
-          }
-        });
+      if(i == 6){
+        resposnse.redirect('/inspector');
       }
     }
 
@@ -170,13 +183,7 @@ app.get('/add_hospital_section',function(req,response){
   var name = req.param('name');
   if(req.param('hospital')){
     var hospital_id = req.param('hospital');
-  }
-  else {
-    session.startSession(req, res,function(){
-      hospital_id = req.session.get('hospital_id');
-    });
-  }
-public_functions.hospital_by_id(hospital_id,function(hospital_name){
+    public_functions.hospital_by_id(hospital_id,function(hospital_name){
   console.log(hospital_name);
   hospital_admin.add_hospital_section(name,hospital_id,hospital_name,function(res){
     if(res){
@@ -187,6 +194,24 @@ public_functions.hospital_by_id(hospital_id,function(hospital_name){
     }
   });
 });
+  }
+  else {
+    session.startSession(req, response,function(){
+      hospital_id = req.session.get('hospital_id');
+      public_functions.hospital_by_id(hospital_id,function(hospital_name){
+  console.log(hospital_name);
+  hospital_admin.add_hospital_section(name,hospital_id,hospital_name,function(res){
+    if(res){
+      response.redirect('/hospital_admin_sections');
+    }
+    else {
+      response.send(res);
+    }
+  });
+});
+    });
+  }
+
 });
 
 
@@ -198,13 +223,7 @@ app.get('/add_hospital_inspector',function(req,response){
   var password = req.param('password');
   if(req.param('hospital')){
     var hospital_id = req.param('hospital');
-  }
-  else {
-    session.startSession(req, res,function(){
-      hospital_id = req.session.get('hospital_id');
-    });
-  }
-public_functions.hospital_by_id(hospital_id,function(hospital_name){
+    public_functions.hospital_by_id(hospital_id,function(hospital_name){
 
   hospital_admin.add_hospital_inspector(name,email,password,hospital_id,hospital_name,function(res){
     if(res){
@@ -215,6 +234,24 @@ public_functions.hospital_by_id(hospital_id,function(hospital_name){
     }
   });
 });
+  }
+  else {
+    session.startSession(req, response,function(){
+      hospital_id = req.session.get('hospital_id');
+      public_functions.hospital_by_id(hospital_id,function(hospital_name){
+
+  hospital_admin.add_hospital_inspector(name,email,password,hospital_id,hospital_name,function(res){
+    if(res){
+      response.redirect('/hospital_admin_inspectors');
+    }
+    else {
+      response.send(res);
+    }
+  });
+});
+    });
+  }
+
 });
 
 
