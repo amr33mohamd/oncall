@@ -266,10 +266,16 @@ app.get('/api/hospitals',function(req,res){
     for(let i in data){
       if(i%2 == 0){
         tmp.push(data[i]);
-        
+
         console.log(i++);
-        tmp.push(data[i++]);
-        ndata.push(tmp);   
+        if(i == data.length){
+          tmp.push({'id':null});
+        }
+        else{
+          tmp.push(data[i++]);
+        }
+        ndata.push(tmp);
+
       }
       else{
         tmp = [];
