@@ -260,7 +260,22 @@ app.get('/add_hospital_inspector',function(req,response){
 // //////////////////////////// ///////////////////////////////// API ///////////////////////// ////////////////////////////////// //
 app.get('/api/hospitals',function(req,res){
   full_admin.hospitals(function(data){
-    res.send(JSON.stringify(data));
+    res.header('Content-Type', 'application/json');
+    tmp = [];
+    ndata = [];
+    for(let i in data){
+      if(i%2 == 0){
+        tmp.push(data[i]);
+        tmp.push(data[i++]);
+        ndata.push(tmp);
+        
+      }
+      else{
+        tmp = [];
+      }
+      
+    }
+    res.send(ndata);
   });
 });
 
@@ -268,6 +283,7 @@ app.get('/api/hospitals',function(req,res){
 app.get('/api/sections',function(req,res){
  var hospital_id = req.param('hospital_id');
  hospital_admin.hospital_sections(hospital_id,function(data){
+  res.header('Content-Type', 'application/json');
    res.send(JSON.stringify(data));
  });
 });
@@ -279,6 +295,7 @@ app.get('/api/search',function(req,res){
   var section_id = req.param('section_id');
   var hospital_id = req.param('hospital_id');
   public_functions.records(date,hospital_id,section_id,function(data){
+    res.header('Content-Type', 'application/json');
     res.send(JSON.stringify(data));
   });
 });
