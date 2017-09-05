@@ -66,14 +66,20 @@
                       </label>
 
                       <div class="col-md-12 col-sm-12 col-xs-12 row">
-                        <input style="margin-left:5px;" type="text" id="<%= num %>name" name="<%= num %>name" placeholder="name"  class="form-control col-md-4 col-xs-4">
+                        <input style="margin-left:5px;" type="text" id="<%= num %>name" name="<%= num %>title" placeholder="name"  class="form-control col-md-4 col-xs-4">
                         <input style="margin-left:5px;" type="email" id="<%= num %>email" name="<%= num %>email" placeholder="email"  class="form-control col-md-4 col-xs-4">
                         <input style="margin-left:5px;" type="text" id="<%= num %>extinstion" name="<%= num %>extinstion" placeholder="extinstion" class="form-control col-md-4 col-xs-4">
-                        <input style="margin-left:5px;" type="number" id="<%= num %>phone_number" name="<%= num %>phone_number" placeholder="phone number"  class="form-control col-md-4 col-xs-4">
+                        <input style="margin-left:5px;" type="number" id="<%= num %>phone_number" name="<%= num %>description" placeholder="phone number"  class="form-control col-md-4 col-xs-4">
                         <input style="margin-left:5px;" type="number" id="<%= num %>pager" name="<%= num %>pager" placeholder="pager"  class="form-control col-md-4 col-xs-4">
                         <input style="margin-left:5px;margin-top:5px;" type="text" id="<%= num %>position" name="<%= num %>position" placeholder="position"  class="form-control col-md-4 col-xs-4">
-
-                        <input type="hidden" name="<%= num %>title" value="<%= num %>"/>
+                        <input type="hidden" name="<%= num %>imageUrl" value="https://scontent.faly1-1.fna.fbcdn.net/v/t34.0-12/21325892_1948845228737299_1620304484_n.png?oh=3e362ce657d9ede1294b56e17546f7ce&oe=59AF337C"/>
+                        <input type="hidden" name="<%= num %>time" value="
+                        <% if(num != 6){%>
+                        <%= num %>th. %>
+                        <% }else{ %>
+                        cons.
+                        <% } %>
+                          "/>
                       </div>
                     </div>
                     <% } %>

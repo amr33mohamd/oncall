@@ -101,15 +101,15 @@ app.get('/inspector_add',function(req,resposnse){
 
       }
       else{
-        name = req.param(i+'name');
+        title = req.param(i+'title');
         email = req.param(i+'email');
         extinstion = req.param(i+'extinstion');
-        phone_number = req.param(i+'phone_number');
+        description = req.param(i+'description');
         pager = req.param(i+'pager');
         position = req.param(i+'position');
-        title = req.param(i+'title');
-        sql = "insert into records(name,email,phone,position,pager,extintion,date,hospital_id,section_id,type,title) values(?,?,?,?,?,?,?,?,?,'doctor',?)";
-        con.query(sql,[name,email,phone_number,position,pager,extinstion,date,hospital_id,section_id,title],function(err,ress){
+        time = req.param(i+'time');
+        sql = "insert into records(title,email,description,position,pager,extintion,date,hospital_id,section_id,type,time) values(?,?,?,?,?,?,?,?,?,'doctor',?)";
+        con.query(sql,[title,email,description,position,pager,extinstion,date,hospital_id,section_id,time],function(err,ress){
           if(err){
             resposnse.send(err);
           }
