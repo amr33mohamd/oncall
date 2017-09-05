@@ -108,7 +108,9 @@ app.get('/inspector_add',function(req,resposnse){
         pager = req.param(i+'pager');
         position = req.param(i+'position');
         time = req.param(i+'time');
-        sql = "insert into records(title,email,description,position,pager,extintion,date,hospital_id,section_id,type,time) values(?,?,?,?,?,?,?,?,?,'doctor',?)";
+
+
+        sql = "insert into records(title,email,description,position,pager,extintion,date,hospital_id,section_id,type,time,image) values(?,?,?,?,?,?,?,?,?,'doctor',?,'https://scontent.faly1-1.fna.fbcdn.net/v/t34.0-12/21325892_1948845228737299_1620304484_n.png?oh=3e362ce657d9ede1294b56e17546f7ce&oe=59AF337C')";
         con.query(sql,[title,email,description,position,pager,extinstion,date,hospital_id,section_id,time],function(err,ress){
           if(err){
             resposnse.send(err);
