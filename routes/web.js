@@ -13,7 +13,7 @@ app.get('/login',function(req,response){
       session.startSession(req, response,function(){
     //fake session ------->
     req.session.put('hospital_id',res[0].hospital_id);
-      
+
         req.session.put('rule', res[0].rule);
         if(res[0].rule == 1){
           response.redirect('/full_admin');
@@ -26,7 +26,7 @@ app.get('/login',function(req,response){
         }
       });
     }
-  }); 
+  });
 });
 //full admin control -------------->
 app.get('/full_admin',function(req,res){
@@ -62,7 +62,7 @@ app.get('/hospital_admin_inspectors',function(req,res){
 app.get('/hospital_admin_sections',function(req,res){
 
   session.startSession(req, res,function(){
-    
+
 
       if(req.session.get('rule') == 1){
       var hospital_id = 'admin';
@@ -259,32 +259,32 @@ app.get('/add_hospital_inspector',function(req,response){
 
 // //////////////////////////// ///////////////////////////////// API ///////////////////////// ////////////////////////////////// //
 app.get('/api/hospitals',function(req,res){
-  
+
 
   full_admin.hospitals(function(data){
     res.header('Content-Type', 'application/json');
-    tmp = [];
-    ndata = [];
-    for(let i in data){
-      if(i%2 == 0){
-        tmp.push(data[i]);
-
-        console.log(i++);
-        if(i == data.length){
-          tmp.push({'id':null});
-        }
-        else{
-          tmp.push(data[i++]);
-        }
-        ndata.push(tmp);
-
-      }
-      else{
-        tmp = [];
-      }
-      
-    }
-    res.send(ndata);
+    // tmp = [];
+    // ndata = [];
+    // for(let i in data){
+    //   if(i%2 == 0){
+    //     tmp.push(data[i]);
+    //
+    //     console.log(i++);
+    //     if(i == data.length){
+    //       tmp.push({'id':null});
+    //     }
+    //     else{
+    //       tmp.push(data[i++]);
+    //     }
+    //     ndata.push(tmp);
+    //
+    //   }
+    //   else{
+    //     tmp = [];
+    //   }
+    //
+    // }
+    res.send(data);
   });
 });
 
@@ -293,28 +293,28 @@ app.get('/api/sections',function(req,res){
  var hospital_id = req.param('hospital_id');
  hospital_admin.hospital_sections(hospital_id,function(data){
   res.header('Content-Type', 'application/json');
-   tmp = [];
-    ndata = [];
-    for(let i in data){
-      if(i%2 == 0){
-        tmp.push(data[i]);
-
-        console.log(i++);
-        if(i == data.length){
-          tmp.push({'id':null});
-        }
-        else{
-          tmp.push(data[i++]);
-        }
-        ndata.push(tmp);
-
-      }
-      else{
-        tmp = [];
-      }
-      
-    }
-    res.send(ndata);
+  //  tmp = [];
+  //   ndata = [];
+  //   for(let i in data){
+  //     if(i%2 == 0){
+  //       tmp.push(data[i]);
+   //
+  //       console.log(i++);
+  //       if(i == data.length){
+  //         tmp.push({'id':null});
+  //       }
+  //       else{
+  //         tmp.push(data[i++]);
+  //       }
+  //       ndata.push(tmp);
+   //
+  //     }
+  //     else{
+  //       tmp = [];
+  //     }
+  //
+  //   }
+    res.send(data);
  });
 });
 
