@@ -335,6 +335,7 @@ app.get('/api/search',function(req,res){
 app.get('/api/record_by_id',function(req,res){
   var record_id = req.param('record_id');
   public_functions.records_by_id(record_id,function(data){
+    res.header('Content-Type', 'application/json');
     res.send(JSON.stringify(data));
   });
 });
