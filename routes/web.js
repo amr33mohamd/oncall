@@ -62,11 +62,8 @@ app.get('/hospital_admin_inspectors',function(req,res){
 app.get('/hospital_admin_sections',function(req,res){
 
   session.startSession(req, res,function(){
-
-
       if(req.session.get('rule') == 1){
       var hospital_id = 'admin';
-
       }
       else{
       var hospital_id = req.session.get('hospital_id');
@@ -96,6 +93,14 @@ app.get('/inspector_add',function(req,resposnse){
   session.startSession(req, resposnse,function(){
     hospital_id = req.session.get('hospital_id');
     section_id = req.param('section_id');
+    check_date_sql = "select * from records where date = ?";
+    con.query(check_date_sql,[date],function(err,res){
+      if(res.length != 0){
+        sql= "UPDATE `records` SET `title`= ?,`email`= ?,`description`= ?,`position`= ?,`pager`= ?,`extintion`= ?,`date`= ?,`hospital_id`= ?,`section_id`= ?,`type`='doctor' WHERE time= ? and date='"+date+"'";
+      }
+      else{
+        sql = "insert into records(title,email,description,position,pager,extintion,date,hospital_id,section_id,type,time,image) values(?,?,?,?,?,?,?,?,?,'doctor',?,'https://scontent.faly1-1.fna.fbcdn.net/v/t34.0-12/21325892_1948845228737299_1620304484_n.png?oh=3e362ce657d9ede1294b56e17546f7ce&oe=59AF337C')";
+      }
     for(i=1;i<=6;i++){
       if(req.param(i+'name') == ''){
 
@@ -108,21 +113,21 @@ app.get('/inspector_add',function(req,resposnse){
         pager = req.param(i+'pager');
         position = req.param(i+'position');
         time = req.param(i+'time');
-
-
-        sql = "insert into records(title,email,description,position,pager,extintion,date,hospital_id,section_id,type,time,image) values(?,?,?,?,?,?,?,?,?,'doctor',?,'https://scontent.faly1-1.fna.fbcdn.net/v/t34.0-12/21325892_1948845228737299_1620304484_n.png?oh=3e362ce657d9ede1294b56e17546f7ce&oe=59AF337C')";
-        con.query(sql,[title,email,description,position,pager,extinstion,date,hospital_id,section_id,time],function(err,ress){
-          if(err){
-            resposnse.send(err);
+          con.query(sql,[title,email,description,position,pager,extinstion,date,hospital_id,section_id,time],function(err,ress){
+            if(err){
+              resposnse.send(err);
+              console.log(err);
+            }
+            else {
+              console.log(ress);
           }
-
-        });
+        })
       }
-      if(i == 6){
-        resposnse.redirect('/inspector');
+      if(i== 6){
+        response.redirect('/inspector_add');
       }
     }
-
+  });
   });
 });
 
@@ -338,7 +343,7 @@ app.get('/api/search/session',function(req,res){
   var section_id = req.param('section_id');
   session.startSession(req, res,function(){
     hospital_id = req.session.get('hospital_id');
-    public_functions.records(date,hospital_id,section_id,function(data){
+    public_functions.records_session(date,hospital_id,section_id,function(data){
       res.header('Content-Type', 'application/json');
       res.send(JSON.stringify(data));
     });

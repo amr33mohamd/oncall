@@ -17,6 +17,13 @@ exports.records = function(date,hospital_id,section_id,callback){
     callback(res);
   });
 };
+
+exports.records_session = function(date,hospital_id,section_id,callback){
+  var sql = "select * from records where date = ? and hospital_id = ? and section_id = ?";
+  con.query(sql,[date,hospital_id,section_id],function(err, res){
+    callback(res);
+  });
+};
 exports.records_by_id = function(id,callback){
   var sql = "select * from records where id = ?";
   con.query(sql,[id],function(err, res){

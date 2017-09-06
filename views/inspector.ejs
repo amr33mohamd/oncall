@@ -14,7 +14,6 @@
                     </li>
                     <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-
                     </li>
                     <li><a class="close-link"><i class="fa fa-close"></i></a>
                     </li>
@@ -28,10 +27,10 @@
                   <form action="/inspector_add" method="get">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Date <span class="required">*</span>
                     </label>
-                    <input type="date" name="date" class="form-control" required/>
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">section <span class="required">*</span>
+                    <input type="date" name="date" id="date" class="form-control date" required/>
+                    <label  class="control-label col-md-3 col-sm-3 col-xs-12" for="name">section <span class="required">*</span>
                     </label>
-                    <select class="form-control" name="section_id">
+                    <select id="section" class="form-control" name="section_id">
                       <% sections.forEach(function(section){ %>
                         <option value="<%= section['id'] %>"><%= section['name'] %></option>
                       <% }); %>
@@ -62,15 +61,13 @@
                       <% if(num == 6){ %>
                       Consultant oncall
                       <% } %>
-
-
                        <span class="required">*</span>
                       </label>
 
                       <div class="col-md-12 col-sm-12 col-xs-12 row">
                         <input style="margin-left:5px;" type="text" id="<%= num %>name" name="<%= num %>title" placeholder="name"  class="form-control col-md-4 col-xs-4">
                         <input style="margin-left:5px;" type="email" id="<%= num %>email" name="<%= num %>email" placeholder="email"  class="form-control col-md-4 col-xs-4">
-                        <input style="margin-left:5px;" type="text" id="<%= num %>extinstion" name="<%= num %>extinstion" placeholder="extinstion" class="form-control col-md-4 col-xs-4">
+                        <input style="margin-left:5px;" type="text" id="<%= num %>extintion" name="<%= num %>extinstion" placeholder="extinstion" class="form-control col-md-4 col-xs-4">
                         <input style="margin-left:5px;" type="number" id="<%= num %>phone_number" name="<%= num %>description" placeholder="phone number"  class="form-control col-md-4 col-xs-4">
                         <input style="margin-left:5px;" type="number" id="<%= num %>pager" name="<%= num %>pager" placeholder="pager"  class="form-control col-md-4 col-xs-4">
                         <input style="margin-left:5px;margin-top:5px;" type="text" id="<%= num %>position" name="<%= num %>position" placeholder="position"  class="form-control col-md-4 col-xs-4">
@@ -98,6 +95,46 @@
 
                              </div>
 
+
+<script>
+$(document).ready(function(){
+  $("#date,#section").on("change",function(){
+    $.get("/api/search/session",{
+      section_id: ''+document.getElementById('section').value,
+      date: ''+document.getElementById('date').value
+    },function(data){
+      if(data.length != 0){
+        for(let i in data){
+          g = parseInt(i,10)+1
+          $('#'+g+'name').val(data[i].title);
+          $('#'+g+'email').val(data[i].email);
+          $('#'+g+'extintion').val(data[i].extintion);
+          $('#'+g+'phone_number').val(data[i].description);
+          $('#'+g+'pager').val(data[i].pager);
+          $('#'+g+'position').val(data[i].position);
+        }
+      }
+      else{
+
+        var k = 1;
+        while(k<=6){
+
+          $('#'+k+'name').val('');
+          $('#'+k+'email').val('');
+          $('#'+k+'extintion').val('');
+          $('#'+k+'phone_number').val('');
+          $('#'+k+'pager').val('');
+          $('#'+k+'position').val('');
+          k++;
+        }
+      }
+
+    });
+  });
+});
+
+
+</script>
 
 
 
