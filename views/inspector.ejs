@@ -1,5 +1,7 @@
 <%- include('parts/header', {page: 'Records Control'}); %>
 <%- include('parts/slide_bar',{page: 'Records Control'}); %>
+
+  <sc
 <div class="container">
 
 <!-- Table --->
@@ -73,7 +75,7 @@
                         <input style="margin-left:5px;" type="number" id="<%= num %>pager" name="<%= num %>pager" placeholder="pager"  class="form-control col-md-4 col-xs-4">
                         <input style="margin-left:5px;margin-top:5px;" type="text" id="<%= num %>position" name="<%= num %>position" placeholder="position"  class="form-control col-md-4 col-xs-4">
 
-                        <input type="hidden" name="<%= num %>time" value="<% if(num != 6){%><%= num %>th.%><% }else{ %>cons.<% } %>"/>
+                        <input type="hidden" name="<%= num %>time" value="<%if(num == 1){%>Intern.<% }if(num == 2){ %>1th<% }if(num == 3){ %>2nd<% }if(num == 4){ %>3th<% }if(num == 5){ %>4th<% }if(num == 6){ %>Consultant<% } %>"/>
                       </div>
                     </div>
                     <% } %>

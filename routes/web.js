@@ -333,6 +333,17 @@ app.get('/api/search',function(req,res){
   });
 });
 
+app.get('/api/search/session',function(req,res){
+  var date = req.param('date');
+  var section_id = req.param('section_id');
+  session.startSession(req, res,function(){
+    hospital_id = req.session.get('hospital_id');
+    public_functions.records(date,hospital_id,section_id,function(data){
+      res.header('Content-Type', 'application/json');
+      res.send(JSON.stringify(data));
+    });
+  });
+});
 
 app.get('/api/record_by_id',function(req,res){
   var record_id = req.param('record_id');
@@ -344,7 +355,7 @@ app.get('/api/record_by_id',function(req,res){
 
 app.get('/api/mail',function(req,res){
 
-const sgMail = require('@sendgrid/mail');
+const sgMail = require('../@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const msg = {
   to: 'amr2010mohamd2010@gmail.com',
