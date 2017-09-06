@@ -1,0 +1,29 @@
+//doctors database ---------->
+// check_doctors_sql = "select * doctors where title = ?";
+// con.query(check_doctors_sql,[title],function(err,res){
+//   if(err){
+//     console.log(err);
+//   }
+//   //if the doctor exist ----->
+//   if(res.length != 0){
+//     //if any data changed ----->
+//     if(res[0].title != title || res[0].email != email || res[0].extintion != extinstion || res[0].description != description || res[0].pager != pager || res[0].position != position ){
+//       update_doctor_sql = "UPDATE `doctors` SET `title`= ?,`email`= ?,`description`= ?,`position`= ?,`pager`= ?,`extintion`= ?,`hospital_id`= ?,`type`='doctor'";
+//       con.query(update_doctor_sql,[title,email,description,position,pager,extinstion,hospital_id],function(err,ress){
+//         console.log('updated doctor ...');
+//       });
+//     }
+//     //if there is no data change ----->
+//     else {
+//       console.log('that doctor already in our data');
+//     }
+//   }
+//   //if doctor doesn't exist ----->
+//   else{
+//     add_doctor_sql = "insert into doctors(title,email,description,position,pager,extintion,hospital_id,type) values(?,?,?,?,?,?,?,'doctor')";
+//     con.query(sql,[title,email,description,position,pager,extinstion,hospital_id],function(err,ress){
+//       console.log('added new doctor');
+//     });
+//
+//   } //end if there aren't doctors --->
+// }) //end check doctors ---->

@@ -71,8 +71,16 @@
                         <input style="margin-left:5px;" type="number" id="<%= num %>phone_number" name="<%= num %>description" placeholder="phone number"  class="form-control col-md-4 col-xs-4">
                         <input style="margin-left:5px;" type="number" id="<%= num %>pager" name="<%= num %>pager" placeholder="pager"  class="form-control col-md-4 col-xs-4">
                         <input style="margin-left:5px;margin-top:5px;" type="text" id="<%= num %>position" name="<%= num %>position" placeholder="position"  class="form-control col-md-4 col-xs-4">
-
+                        <label class="text-success" style="padding:10px;">| OR Fast Select From your past data |</label>
+                        <select class="form-control" name="<%= num %>" class="fast" id="fast<%= num %>">
+                          <option value="">Select Doctor</option>
+                          <% doctors.forEach(function(doctor){ %>
+                            <option value="<%= doctor['id'] %>"><%= doctor['title'] %></option>
+                          <% }); %>
+                        </select>
                         <input type="hidden" name="<%= num %>time" value="<%if(num == 1){%>Intern.<% }if(num == 2){ %>1th<% }if(num == 3){ %>2nd<% }if(num == 4){ %>3th<% }if(num == 5){ %>4th<% }if(num == 6){ %>Consultant<% } %>"/>
+
+
                       </div>
                     </div>
                     <% } %>
@@ -98,6 +106,8 @@
 
 <script>
 $(document).ready(function(){
+
+  //getting stored records ----->
   $("#date,#section").on("change",function(){
     $.get("/api/search/session",{
       section_id: ''+document.getElementById('section').value,
@@ -131,6 +141,110 @@ $(document).ready(function(){
 
     });
   });
+
+
+
+
+  //getting stored doctors ----------->
+  $("#fast1").on('change',function(){
+
+     num = $(this).attr('name');
+    doctor_id = $(this).val();
+    $.get('/api/doctor_by_id',{
+      doctor_id: doctor_id,
+    },function(data){
+        $("#"+num+"name").val(data[0].title);
+        $("#"+num+"phone_number").val(data[0].description);
+        $("#"+num+"email").val(data[0].email);
+        $("#"+num+"extintion").val(data[0].extintion);
+        $("#"+num+"pager").val(data[0].pager);
+        $("#"+num+"position").val(data[0].position);
+    });
+  });
+
+  $("#fast2").on('change',function(){
+
+     num = $(this).attr('name');
+    doctor_id = $(this).val();
+    $.get('/api/doctor_by_id',{
+      doctor_id: doctor_id,
+    },function(data){
+        $("#"+num+"name").val(data[0].title);
+        $("#"+num+"phone_number").val(data[0].description);
+        $("#"+num+"email").val(data[0].email);
+        $("#"+num+"extintion").val(data[0].extintion);
+        $("#"+num+"pager").val(data[0].pager);
+        $("#"+num+"position").val(data[0].position);
+    });
+  });
+
+
+  $("#fast3").on('change',function(){
+
+     num = $(this).attr('name');
+    doctor_id = $(this).val();
+    $.get('/api/doctor_by_id',{
+      doctor_id: doctor_id,
+    },function(data){
+        $("#"+num+"name").val(data[0].title);
+        $("#"+num+"phone_number").val(data[0].description);
+        $("#"+num+"email").val(data[0].email);
+        $("#"+num+"extintion").val(data[0].extintion);
+        $("#"+num+"pager").val(data[0].pager);
+        $("#"+num+"position").val(data[0].position);
+    });
+  });
+
+  $("#fast4").on('change',function(){
+
+     num = $(this).attr('name');
+    doctor_id = $(this).val();
+    $.get('/api/doctor_by_id',{
+      doctor_id: doctor_id,
+    },function(data){
+        $("#"+num+"name").val(data[0].title);
+        $("#"+num+"phone_number").val(data[0].description);
+        $("#"+num+"email").val(data[0].email);
+        $("#"+num+"extintion").val(data[0].extintion);
+        $("#"+num+"pager").val(data[0].pager);
+        $("#"+num+"position").val(data[0].position);
+    });
+  });
+
+
+  $("#fast5").on('change',function(){
+
+     num = $(this).attr('name');
+    doctor_id = $(this).val();
+    $.get('/api/doctor_by_id',{
+      doctor_id: doctor_id,
+    },function(data){
+        $("#"+num+"name").val(data[0].title);
+        $("#"+num+"phone_number").val(data[0].description);
+        $("#"+num+"email").val(data[0].email);
+        $("#"+num+"extintion").val(data[0].extintion);
+        $("#"+num+"pager").val(data[0].pager);
+        $("#"+num+"position").val(data[0].position);
+    });
+  });
+
+
+  $("#fast6").on('change',function(){
+
+     num = $(this).attr('name');
+    doctor_id = $(this).val();
+    $.get('/api/doctor_by_id',{
+      doctor_id: doctor_id,
+    },function(data){
+        $("#"+num+"name").val(data[0].title);
+        $("#"+num+"phone_number").val(data[0].description);
+        $("#"+num+"email").val(data[0].email);
+        $("#"+num+"extintion").val(data[0].extintion);
+        $("#"+num+"pager").val(data[0].pager);
+        $("#"+num+"position").val(data[0].position);
+    });
+  });
+
 });
 
 

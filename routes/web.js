@@ -82,9 +82,12 @@ app.get('/hospital_admin_sections',function(req,res){
 });
 app.get('/inspector',function(req,res){
   session.startSession(req, res,function(){
-    hospital_id = req.session.get('hospital_id');
+  const  hospital_id = req.session.get('hospital_id');
     hospital_admin.hospital_sections(hospital_id,function(data){
-    res.render('inspector',{sections:data,rule:req.session.get('rule')});
+       public_functions.doctors(hospital_id,function(doctors){
+        res.render('inspector',{sections:data,rule:req.session.get('rule'),doctors:doctors});
+        // console.log(doctors);
+       });
     });
   });
 });
@@ -106,25 +109,64 @@ app.get('/inspector_add',function(req,resposnse){
 
       }
       else{
-        title = req.param(i+'title');
-        email = req.param(i+'email');
-        extinstion = req.param(i+'extinstion');
-        description = req.param(i+'description');
-        pager = req.param(i+'pager');
-        position = req.param(i+'position');
-        time = req.param(i+'time');
+
+    const title = req.param(i+'title');
+    const    email = req.param(i+'email');
+    const    extinstion = req.param(i+'extinstion');
+      const  description = req.param(i+'description');
+      const  pager = req.param(i+'pager');
+      const  position = req.param(i+'position');
+      const  time = req.param(i+'time');
+        //doctors database ---------->
+if(title != ''){
+        check_doctors_sql = "select * from doctors where title = ?";
+        con.query(check_doctors_sql,[title],function(err,res){
+
+
+          if(err){
+            console.log(err);
+          }
+          //if the doctor exist ----->
+          if(res.length != 0){
+            //if any data changed ----->
+            if(res[0].title != title || res[0].email != email || res[0].extintion != extinstion || res[0].description != description || res[0].pager != pager || res[0].position != position ){
+              update_doctor_sql = "UPDATE `doctors` SET `title`= ?,`email`= ?,`description`= ?,`position`= ?,`pager`= ?,`extintion`= ?,`hospital_id`= ?,`type`='doctor' where title = '"+title+"'";
+              con.query(update_doctor_sql,[title,email,description,position,pager,extinstion,hospital_id],function(err,ress){
+                console.log('updated doctor ...');
+              });
+            }
+            //if there is no data change ----->
+            else {
+              console.log('that doctor already in our data');
+            }
+          }
+          //if doctor doesn't exist ----->
+          else{
+            add_doctor_sql = "insert into doctors(title,email,description,position,pager,extintion,hospital_id,type) values(?,?,?,?,?,?,?,'doctor')";
+            con.query(add_doctor_sql,[title,email,description,position,pager,extinstion,hospital_id],function(err,ress){
+              if(err){
+                console.log(err)
+              }
+              else{
+                console.log('added new doctor ...')
+              }
+            });
+
+          } //end if there aren't doctors --->
+        }) //end check doctors ---->
+}
+        //performing adding or updating current record ----->
           con.query(sql,[title,email,description,position,pager,extinstion,date,hospital_id,section_id,time],function(err,ress){
             if(err){
-              resposnse.send(err);
               console.log(err);
             }
             else {
-              console.log(ress);
+
           }
         })
       }
-      if(i== 6){
-        response.redirect('/inspector_add');
+      if(i == 6){
+        resposnse.redirect('/inspector');
       }
     }
   });
@@ -347,6 +389,13 @@ app.get('/api/search/session',function(req,res){
       res.header('Content-Type', 'application/json');
       res.send(JSON.stringify(data));
     });
+  });
+});
+
+app.get('/api/doctor_by_id',function(req,res){
+  var doctor_id = req.param('doctor_id');
+  public_functions.doctor_by_id(doctor_id,function(data){
+    res.send(data);
   });
 });
 
