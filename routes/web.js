@@ -176,6 +176,8 @@ if(title != ''){
 
 
 app.get('/delete_hospital_admin',function(req,resposnse){
+ 
+  /*
     var id = req.param('id');
 full_admin.delete_hospital_admin(id,function(res){
   if(res){
@@ -185,6 +187,7 @@ full_admin.delete_hospital_admin(id,function(res){
     resposnse.redirect('/full_admin');
   }
 });
+*/
 });
 app.get('/delete_hospital_section',function(req,resposnse){
   var id = req.param('id');

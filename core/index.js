@@ -6,7 +6,6 @@
     kk = require('express')();
     http = require('http').Server(app);
     io = require('socket.io')(http);
-
    app.set('view engine', 'ejs');
   app.use(express.static('public'));
 fetch = require('node-fetch');
