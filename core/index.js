@@ -9,7 +9,7 @@
 
    app.set('view engine', 'ejs');
   app.use(express.static('public'));
-
+fetch = require('node-fetch');
   con = mysql.createConnection({
   host: "ipobfcpvprjpmdo9.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
   user: "q3bre9d02wcisjw0",

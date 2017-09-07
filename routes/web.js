@@ -408,15 +408,14 @@ app.get('/api/record_by_id',function(req,res){
 });
 
 app.get('/api/mail',function(req,res){
-
-const sgMail = require('../@sendgrid/mail');
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-const msg = {
-  to: 'amr2010mohamd2010@gmail.com',
-  from: 'OnCall@oncall.com',
-  subject: 'Sending with SendGrid is Fun',
-  text: 'and easy to do anywhere, even with Node.js',
-  html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-};
-sgMail.send(msg);
+  var name = req.param('name');
+  var email = req.param('email');
+  var message = req.param('message');
+// =amr&email=amr2010&message=I%20need%20that%20service%20please
+fetch('https://presentation4u.000webhostapp.com/index.php?name='+name+'&email='+email+'&message='+message)
+    .then(function(res) {
+        return res.text();
+    })
+    res.header('Content-Type', 'application/json');
+    res.send({status:"done"});
 });
