@@ -366,12 +366,19 @@ app.get('/api/sections',function(req,res){
 
 
 app.get('/api/search',function(req,res){
-  var date = req.param('date');
+  const date = req.param('date');
   var section_id = req.param('section_id');
   var hospital_id = req.param('hospital_id');
   public_functions.records(date,hospital_id,section_id,function(data){
     res.header('Content-Type', 'application/json');
+    if(data.length == 0){
+      console.log('000');
+        res.send([{date}]);
+      }
+      else{
+        console.log('no')
     res.send(JSON.stringify(data));
+    } 
   });
 });
 
@@ -401,7 +408,12 @@ app.get('/api/forward',function(req,res){
 generated_date = year+"-"+new_month+"-"+new_day;
   public_functions.records(generated_date,hospital_id,section_id,function(data){
     res.header('Content-Type', 'application/json');
+    if(data.length == 0){
+        res.send([{date:generated_date}]);
+      }
+      else{
     res.send(JSON.stringify(data));
+  }
   });
 });
 
@@ -432,7 +444,12 @@ app.get('/api/backward',function(req,res){
   console.log(generated_date);
   public_functions.records(generated_date,hospital_id,section_id,function(data){
     res.header('Content-Type', 'application/json');
+    if(data.length == 0){
+        res.send([{date:generated_date}]);
+      }
+      else{
     res.send(JSON.stringify(data));
+      }
   });
   
 });
@@ -444,7 +461,10 @@ app.get('/api/search/session',function(req,res){
     hospital_id = req.session.get('hospital_id');
     public_functions.records_session(date,hospital_id,section_id,function(data){
       res.header('Content-Type', 'application/json');
-      res.send(JSON.stringify(data));
+
+        res.send(JSON.stringify(data));
+      
+      
     });
   });
 });
