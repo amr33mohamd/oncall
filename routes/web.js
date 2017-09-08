@@ -367,17 +367,30 @@ app.get('/api/sections',function(req,res){
 
 app.get('/api/search',function(req,res){
   const date = req.param('date');
+  var d = new Date(date);
+  const day = d.getDate();
   var section_id = req.param('section_id');
   var hospital_id = req.param('hospital_id');
   public_functions.records(date,hospital_id,section_id,function(data){
     res.header('Content-Type', 'application/json');
     if(data.length == 0){
       console.log('000');
-        res.send([{date}]);
+        res.send([{date:date,day_number:day}]);
       }
       else{
-        console.log('no')
-    res.send(JSON.stringify(data));
+        let new_data = [];
+        for(let i in data){
+          new_data.push({
+            id : data[i].id,
+            title : data[i].title,
+            description : data[i].description,
+            time: data[i].time,
+            image: data[i].image,
+            date: data[i].date,
+            day_number: day
+          });
+        }
+      res.send(JSON.stringify(new_data));
     } 
   });
 });
@@ -389,7 +402,7 @@ app.get('/api/forward',function(req,res){
   var hospital_id = req.param('hospital_id');
   let new_date = addSubtractDate.add(date, 1, "days");
   let newdate = new Date(new_date);
-  day = newdate.getDate();
+  const day = newdate.getDate();
   month = newdate.getMonth();
   year = newdate.getFullYear();
   console.log(month++);
@@ -409,10 +422,23 @@ generated_date = year+"-"+new_month+"-"+new_day;
   public_functions.records(generated_date,hospital_id,section_id,function(data){
     res.header('Content-Type', 'application/json');
     if(data.length == 0){
-        res.send([{date:generated_date}]);
+        res.send([{date:generated_date,
+          day_number:day}]);
       }
       else{
-    res.send(JSON.stringify(data));
+     let new_data = [];
+        for(let i in data){
+          new_data.push({
+            id : data[i].id,
+            title : data[i].title,
+            description : data[i].description,
+            time: data[i].time,
+            image: data[i].image,
+            date: data[i].date,
+            day_number: day
+          });
+        }
+      res.send(JSON.stringify(new_data));
   }
   });
 });
@@ -424,7 +450,7 @@ app.get('/api/backward',function(req,res){
   var hospital_id = req.param('hospital_id');
   let new_date = addSubtractDate.subtract(date, 1, "day");
   let newdate = new Date(new_date);
-  day = newdate.getDate();
+  const day = newdate.getDate();
   month = newdate.getMonth();
   year = newdate.getFullYear();
   console.log(month++);
@@ -435,20 +461,34 @@ app.get('/api/backward',function(req,res){
     new_month = month;
   }
   if(day <=9){
-    new_day = "0"+day;
+     new_day = "0"+day;
   }
   else{
-    new_day = day;
+     new_day = day;
   }
   generated_date = year+"-"+new_month+"-"+new_day;
+  
   console.log(generated_date);
   public_functions.records(generated_date,hospital_id,section_id,function(data){
     res.header('Content-Type', 'application/json');
     if(data.length == 0){
-        res.send([{date:generated_date}]);
+        res.send([{date:generated_date,
+          day_number:day}]);
       }
       else{
-    res.send(JSON.stringify(data));
+        let new_data = [];
+        for(let i in data){
+          new_data.push({
+            id : data[i].id,
+            title : data[i].title,
+            description : data[i].description,
+            time: data[i].time,
+            image: data[i].image,
+            date: data[i].date,
+            day_number: day
+          });
+        }
+      res.send(JSON.stringify(new_data));
       }
   });
   
