@@ -74,11 +74,6 @@ app.get('/hospital_admin_sections',function(req,res){
           });
       });
   });
-
-
-
-
-
 });
 app.get('/inspector',function(req,res){
   session.startSession(req, res,function(){
@@ -176,9 +171,7 @@ if(title != ''){
 
 
 app.get('/delete_hospital_admin',function(req,resposnse){
- 
-  /*
-    var id = req.param('id');
+  var id = req.param('id');
 full_admin.delete_hospital_admin(id,function(res){
   if(res){
 
@@ -187,7 +180,6 @@ full_admin.delete_hospital_admin(id,function(res){
     resposnse.redirect('/full_admin');
   }
 });
-*/
 });
 app.get('/delete_hospital_section',function(req,resposnse){
   var id = req.param('id');
@@ -378,6 +370,67 @@ app.get('/api/search',function(req,res){
   var section_id = req.param('section_id');
   var hospital_id = req.param('hospital_id');
   public_functions.records(date,hospital_id,section_id,function(data){
+    res.header('Content-Type', 'application/json');
+    res.send(JSON.stringify(data));
+  });
+});
+
+app.get('/api/forward',function(req,res){
+  var date = req.param('date');
+  var date = new Date(date);
+  var section_id = req.param('section_id');
+  var hospital_id = req.param('hospital_id');
+  let new_date = addSubtractDate.add(date, 1, "days");
+  let newdate = new Date(new_date);
+  day = newdate.getDate();
+  month = newdate.getMonth();
+  year = newdate.getFullYear();
+  console.log(month++);
+  if(month <= 9){
+    new_month = "0"+month;
+  }
+  else{
+    new_month = month;
+  }
+  if(day <=9){
+    new_day = "0"+day;
+  }
+  else{
+    new_day = day;
+  }
+  generated_date = new_month+"-"+new_day+"-"+year;
+  public_functions.records(generated_date,hospital_id,section_id,function(data){
+    res.header('Content-Type', 'application/json');
+    res.send(JSON.stringify(data));
+  });
+});
+
+app.get('/api/backward',function(req,res){
+  var date = req.param('date');
+  var date = new Date(date);
+  var section_id = req.param('section_id');
+  var hospital_id = req.param('hospital_id');
+  let new_date = addSubtractDate.subtract(date, 1, "day");
+  let newdate = new Date(new_date);
+  day = newdate.getDate();
+  month = newdate.getMonth();
+  year = newdate.getFullYear();
+  console.log(month++);
+  if(month <= 9){
+    new_month = "0"+month;
+  }
+  else{
+    new_month = month;
+  }
+  if(day <=9){
+    new_day = "0"+day;
+  }
+  else{
+    new_day = day;
+  }
+  generated_date = new_month+"-"+new_day+"-"+year;
+  console.log(generated_date);
+  public_functions.records(generated_date,hospital_id,section_id,function(data){
     res.header('Content-Type', 'application/json');
     res.send(JSON.stringify(data));
   });
