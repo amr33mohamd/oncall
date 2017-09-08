@@ -398,7 +398,7 @@ app.get('/api/forward',function(req,res){
   else{
     new_day = day;
   }
-  generated_date = new_month+"-"+new_day+"-"+year;
+generated_date = year+"-"+new_month+"-"+new_day;
   public_functions.records(generated_date,hospital_id,section_id,function(data){
     res.header('Content-Type', 'application/json');
     res.send(JSON.stringify(data));
@@ -428,12 +428,13 @@ app.get('/api/backward',function(req,res){
   else{
     new_day = day;
   }
-  generated_date = new_month+"-"+new_day+"-"+year;
+  generated_date = year+"-"+new_month+"-"+new_day;
   console.log(generated_date);
   public_functions.records(generated_date,hospital_id,section_id,function(data){
     res.header('Content-Type', 'application/json');
     res.send(JSON.stringify(data));
   });
+  
 });
 
 app.get('/api/search/session',function(req,res){
