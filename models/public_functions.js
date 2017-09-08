@@ -12,7 +12,7 @@ exports.hospital_by_id = function(id,callback){
   });
 };
 exports.records = function(date,hospital_id,section_id,callback){
-  var sql = "select id,title,description,time,image from records where date = ? and hospital_id = ? and section_id = ?";
+  var sql = "select id,title,description,time,image,date from records where date = ? and hospital_id = ? and section_id = ?";
   con.query(sql,[date,hospital_id,section_id],function(err, res){
     callback(res);
   });
